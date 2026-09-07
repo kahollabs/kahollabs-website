@@ -23,6 +23,23 @@
 <script>
 const contactForm=document.getElementById('contact-form');
 const formStatus=document.getElementById('form-status');
+const draftKey='kahol-contact-draft';
+const draftFields=['name','email','message'];
+let savedDraft=null;
+try{
+  savedDraft=JSON.parse(localStorage.getItem(draftKey)||'null');
+}catch{
+  localStorage.removeItem(draftKey);
+}
+if(savedDraft){
+  draftFields.forEach(field=>{
+    if(typeof savedDraft[field]==='string') contactForm.elements[field].value=savedDraft[field];
+  });
+}
+contactForm.addEventListener('input',()=>{
+  const draft=Object.fromEntries(draftFields.map(field=>[field,contactForm.elements[field].value]));
+  localStorage.setItem(draftKey,JSON.stringify(draft));
+});
 contactForm.addEventListener('submit',async event=>{
   event.preventDefault();
   const submitButton=contactForm.querySelector('button[type="submit"]');
@@ -34,6 +51,7 @@ contactForm.addEventListener('submit',async event=>{
     const result=await response.json();
     if(!response.ok||!result.success) throw new Error(result.message||'Unable to send your enquiry.');
     contactForm.reset();
+    localStorage.removeItem(draftKey);
     formStatus.textContent='Thanks! Your enquiry was sent successfully.';
     formStatus.className='form-status success';
   }catch(error){
