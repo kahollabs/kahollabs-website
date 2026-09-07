@@ -17,7 +17,32 @@
 <div class="experience"><div><strong>5+ years</strong><span>of product development experience</span></div><div><strong>Native Android &amp; iOS</strong><span>High-quality platform experiences</span></div><div><strong>Flutter</strong><span>Cross-platform apps that scale</span></div></div>
 <div class="grid"><article><strong>✦ Simple</strong><p>Clear interfaces without unnecessary complexity.</p></article><article><strong>◈ Useful</strong><p>Products built around practical use cases.</p></article><article><strong>↗ Growing</strong><p>A continuously evolving product portfolio.</p></article><article><strong>⚙ Automation</strong><p>We automate repetitive workflows and connect the tools your business already uses.</p></article></div></section>
 <section id="apps" class="dark"><small>OUR APPS</small><h2>Meet ViewBoost.</h2><div class="app"><img src="assets/viewboost-icon.png" alt="ViewBoost"><div><img class="vb" src="assets/viewboost-logo.png" alt="ViewBoost"><p>Watch • Earn • Promote • Grow</p><p>ViewBoost lets users watch eligible videos, earn coins through rewarded activity, and use their balance to submit video links for promotion.</p><div class="pills"><span>▶ Watch</span><span>● Earn coins</span><span>🚀 Promote</span><span>↗ Activity</span></div></div></div></section>
-<section id="contact"><small>CONTACT</small><h2>Let's build something useful.</h2><p class="lead">For product, business or collaboration enquiries, reach out to <a class="email-link" href="mailto:kahollabs@gmail.com">kahollabs@gmail.com</a>.</p><div class="contact-layout"><form class="contact-form" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="4531dd0e-28bd-4e33-a6ad-8fedd1bccb69"><input type="hidden" name="subject" value="New enquiry from Kahol Labs website"><input type="hidden" name="from_name" value="Kahol Labs website"><input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off"><label for="name">Your name</label><input id="name" name="name" type="text" placeholder="Enter your name" required><label for="email">Your email</label><input id="email" name="email" type="email" placeholder="you@example.com" required><label for="message">How can we help?</label><textarea id="message" name="message" rows="5" placeholder="Tell us about your project" required></textarea><button class="btn" type="submit">Send enquiry</button></form><div class="contact-note"><strong>Let's connect.</strong><p>Share your idea, product brief, or collaboration requirement. We work across Native Android, Native iOS, Flutter, cross-platform development, workflow automation, and API integrations.</p><a class="email-link" href="mailto:kahollabs@gmail.com">kahollabs@gmail.com</a></div></div></section>
+<section id="contact"><small>CONTACT</small><h2>Let's build something useful.</h2><p class="lead">For product, business or collaboration enquiries, reach out to <a class="email-link" href="mailto:kahollabs@gmail.com">kahollabs@gmail.com</a>.</p><div class="contact-layout"><form id="contact-form" class="contact-form" action="https://api.web3forms.com/submit" method="POST"><input type="hidden" name="access_key" value="4531dd0e-28bd-4e33-a6ad-8fedd1bccb69"><input type="hidden" name="subject" value="New enquiry from Kahol Labs website"><input type="hidden" name="from_name" value="Kahol Labs website"><input type="checkbox" name="botcheck" class="hidden" tabindex="-1" autocomplete="off"><label for="name">Your name</label><input id="name" name="name" type="text" placeholder="Enter your name" required><label for="email">Your email</label><input id="email" name="email" type="email" placeholder="you@example.com" required><label for="message">How can we help?</label><textarea id="message" name="message" rows="5" placeholder="Tell us about your project" required></textarea><button class="btn" type="submit">Send enquiry</button><p id="form-status" class="form-status" role="status" aria-live="polite"></p></form><div class="contact-note"><strong>Let's connect.</strong><p>Share your idea, product brief, or collaboration requirement. We work across Native Android, Native iOS, Flutter, cross-platform development, workflow automation, and API integrations.</p><a class="email-link" href="mailto:kahollabs@gmail.com">kahollabs@gmail.com</a></div></div></section>
 </main>
 <footer><strong class="brand"><img src="assets/kahol-wordmark.png" alt="Kahol Labs"></strong><span>Ideas for a Brighter Tomorrow.</span><span>© 2026 Kahol Labs</span></footer>
+<script>
+const contactForm=document.getElementById('contact-form');
+const formStatus=document.getElementById('form-status');
+contactForm.addEventListener('submit',async event=>{
+  event.preventDefault();
+  const submitButton=contactForm.querySelector('button[type="submit"]');
+  submitButton.disabled=true;
+  submitButton.textContent='Sending...';
+  formStatus.textContent='';
+  try{
+    const response=await fetch(contactForm.action,{method:'POST',body:new FormData(contactForm),headers:{Accept:'application/json'}});
+    const result=await response.json();
+    if(!response.ok||!result.success) throw new Error(result.message||'Unable to send your enquiry.');
+    contactForm.reset();
+    formStatus.textContent='Thanks! Your enquiry was sent successfully.';
+    formStatus.className='form-status success';
+  }catch(error){
+    formStatus.textContent=error.message;
+    formStatus.className='form-status error';
+  }finally{
+    submitButton.disabled=false;
+    submitButton.textContent='Send enquiry';
+  }
+});
+</script>
 </body></html>
