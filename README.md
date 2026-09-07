@@ -15,6 +15,8 @@ Before the first deployment, add this GitHub repository secret:
 
 Its value must be the Firebase service-account JSON generated for the `kahol-labs-website` project. Do not commit the JSON key or share it in chat.
 
+In the repository, open **Settings → Secrets and variables → Actions → New repository secret**, use the exact name above, and paste the complete JSON value. The deployment workflow checks for this secret before invoking Firebase.
+
 You can also trigger deployment manually from the repository's **Actions** tab.
 
 Do not share Firebase passwords or private service-account keys in chat.
