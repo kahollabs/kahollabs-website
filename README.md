@@ -5,18 +5,14 @@ Static responsive website for Kahol Labs featuring ViewBoost.
 
 The repository includes Firebase Hosting configuration for project `kahol-labs-website`.
 
-### Automatic deployment
+### Manual deployment
 
-The GitHub Actions workflow deploys the site automatically on every push to `main`.
+Deploy manually from a trusted environment after authenticating with Firebase CLI:
 
-Before the first deployment, add this GitHub repository secret:
+```bash
+firebase deploy --only hosting
+```
 
-`FIREBASE_SERVICE_ACCOUNT_KAHOL_LABS_WEBSITE`
-
-Its value must be the Firebase service-account JSON generated for the `kahol-labs-website` project. Do not commit the JSON key or share it in chat.
-
-In the repository, open **Settings → Secrets and variables → Actions → New repository secret**, use the exact name above, and paste the complete JSON value. The deployment workflow checks for this secret before invoking Firebase.
-
-You can also trigger deployment manually from the repository's **Actions** tab.
+Automatic publishing is intentionally disabled.
 
 Do not share Firebase passwords or private service-account keys in chat.
